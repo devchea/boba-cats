@@ -1,7 +1,7 @@
 import React from 'react'
 import { tether, Container, Heading, TextInput, PasswordInput, Button, HelperText } from '@triframe/designer'
 
-export const SignUpForm = tether(function*({ Api }){
+export const LoginForm = tether(function*({ Api }){
     const { User } = Api
 
     const form = yield {
@@ -12,7 +12,7 @@ export const SignUpForm = tether(function*({ Api }){
 
     return (
         <Container>
-            <Heading>Sign Up</Heading>
+            <Heading>Login</Heading>
             <TextInput 
                 label="Username"
                 value={form.username}
@@ -25,12 +25,12 @@ export const SignUpForm = tether(function*({ Api }){
             />
             <Button onPress={async () => {
                 try {
-                    await User.register(form.username, form.password)
+                    await User.login(form.username, form.password)
                 }catch(error){
                     form.errorMessage = error.message
                 }
             }}>
-                Sign Up
+                Login
             </Button>
             <HelperText type ="error" visible={form.errorMessage !== null}>
                 {form.errorMessage}
