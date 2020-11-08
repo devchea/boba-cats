@@ -26,7 +26,7 @@ const styles = {
   },
 };
 
-export const SignUpForm = tether(function* ({ Api }) {
+export const SignUpForm = tether(function* ({ Api, redirect }) {
   const { User } = Api;
 
   const form = yield {
@@ -56,7 +56,10 @@ export const SignUpForm = tether(function* ({ Api }) {
         <Button
           onPress={async () => {
             try {
-              await User.register(form.username, form.password);
+              const user = User.register(form.username, form.password)
+              if (user) {
+                redirect("/dashboard")
+              }
             } catch (error) {
               form.errorMessage = error.message;
             }
