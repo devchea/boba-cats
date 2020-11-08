@@ -6,6 +6,7 @@ import {
   Area,
   Grid,
   Column,
+  Heading,
 } from "@triframe/designer";
 import { MenuList } from "./MenuList";
 import { Cart } from "./Cart";
@@ -23,6 +24,7 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
   return (
     <Container>
       <Area alignX="right">
+        <Heading>Wallet Amount: $</Heading>
         <Button onPress={logout}>Log out</Button>
       </Area>
       <Grid>
