@@ -9,6 +9,9 @@ import {
   Divider,
   Modal,
   Section,
+  List,
+  BubbleButton,
+  Avatar,
 } from "@triframe/designer";
 
 const styles = {
@@ -31,25 +34,24 @@ const styles = {
   },
 };
 
-export const Cart = tether(function* ({ Api, props: { state, currentUser } }) {
+export const Cart = tether(function* ({
+  props: { drinks, total, deleteFromCart, currentUser },
+}) {
   const modal = yield {
     isOpen: false,
   };
-  const canBuy = state.total <= currentUser.wallet;
+  const canBuy = total <= currentUser.wallet;
 
-  const purchase = ()=>{
-    currentUser.wallet -= state.total
-  }
+  const purchase = () => {
+    currentUser.wallet -= total;
+  };
 
   const buyDrinks = () => {
     modal.isOpen = true;
-    if (canBuy) {
-     purchase();
-    } else {
-      setTimeout(() => {
-        modal.isOpen = false;
-      }, 3000);
-    }
+    if (canBuy) purchase();
+    setTimeout(() => {
+      modal.isOpen = false;
+    }, 3000);
   };
 
   const featureImage =
@@ -59,7 +61,7 @@ export const Cart = tether(function* ({ Api, props: { state, currentUser } }) {
     <Container>
       <Modal visible={modal.isOpen}>
         <Area alignX="center" style={styles.modal}>
-          {canBuy ? (
+          {!canBuy ? (
             <Section>
               <img style={styles.featureImage} src={`${sadImage}`} />
               <Heading>You need to work more!</Heading>
@@ -75,10 +77,28 @@ export const Cart = tether(function* ({ Api, props: { state, currentUser } }) {
       <Area style={styles.cartContainer}>
         <Title>{currentUser.username}'s Cart</Title>
         <Divider />
+        <Area style={styles.menuContainer}></Area>
+        {drinks.map((d, i) => {
+          return (
+            <Area inline key={i}>
+              <BubbleButton
+                icon="minus"
+                size="xs"
+                color="white"
+                onClick={() => deleteFromCart(d)}
+              />
+              <List.Item
+                title={d.name}
+                description={`$ ${d.price}`}
+                left={() => <Avatar.Image source={d.imageUrl} />}
+              />
+            </Area>
+          );
+        })}
       </Area>
       <Area style={styles.totalContainer}>
         <Divider />
-        <Heading style={styles.totalText}>Total: $</Heading>
+        <Heading style={styles.totalText}>Total: ${total}</Heading>
         <Button onClick={() => buyDrinks()}>Get Yo Boba!</Button>
       </Area>
     </Container>

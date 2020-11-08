@@ -14,14 +14,44 @@ import { Cart } from "./Cart";
 export const Dashboard = tether(function* ({ Api, redirect }) {
   const { User } = Api;
   const currentUser = yield User.current();
-  let state = yield {
-    total: 0,
-    date: new Date(),
-  };
-
   const logout = () => {
     localStorage.clear();
     redirect("/");
+  };
+
+  const currentCart = yield {
+    drinks: [],
+    total: 0,
+  };
+
+  const addToCart = (drink) => {
+    currentCart.drinks.push(drink);
+
+    const currentTotal = currentCart.drinks.reduce((acc, val) => {
+      acc += val.price;
+      return acc;
+    }, 0);
+
+    currentCart.total = currentTotal;
+  };
+
+  const deleteFromCart = (drink) => {
+    const duplicateDrinks = currentCart.drinks.filter((c) => c.id === drink.id);
+    const updatedCart = currentCart.drinks.filter((c) => c.id !== drink.id);
+
+    if (duplicateDrinks.length > 1) {
+      duplicateDrinks.pop();
+      currentCart.drinks = [...updatedCart, ...duplicateDrinks];
+    } else {
+      currentCart.drinks = updatedCart;
+    }
+
+    const currentTotal = currentCart.drinks.reduce((acc, val) => {
+      acc += val.price;
+      return acc;
+    }, 0);
+
+    currentCart.total = currentTotal;
   };
 
   if (currentUser) {
@@ -33,10 +63,15 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
         </Area>
         <Grid>
           <Column lg={6}>
-            <MenuList />
+            <MenuList addToCart={(drink) => addToCart(drink)} />
           </Column>
           <Column lg={4}>
-            <Cart state={state} currentUser={currentUser} />
+            <Cart
+              currentUser={currentUser}
+              drinks={currentCart.drinks}
+              total={currentCart.total}
+              deleteFromCart={(drink) => deleteFromCart(drink)}
+            />
           </Column>
         </Grid>
       </Container>
