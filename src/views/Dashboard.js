@@ -14,6 +14,10 @@ import { Cart } from "./Cart";
 export const Dashboard = tether(function* ({ Api, redirect }) {
   const { User } = Api;
   const currentUser = yield User.current();
+  let state = yield {
+    total: 0,
+    date: new Date(),
+  };
 
   const logout = () => {
     localStorage.clear();
