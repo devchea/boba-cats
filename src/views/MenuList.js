@@ -17,9 +17,8 @@ const styles = {
 };
 
 export const MenuList = tether(function* ({ Api, props: { addToCart } }) {
-  const { User, Drink } = Api;
+  const { Drink } = Api;
 
-  let currentUser = yield User.current();
   const drinks = yield Drink.list();
 
   return (
