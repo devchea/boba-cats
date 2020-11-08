@@ -36,7 +36,7 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
             <MenuList />
           </Column>
           <Column lg={4}>
-            <Cart />
+            <Cart state={state} currentUser={currentUser} />
           </Column>
         </Grid>
       </Container>

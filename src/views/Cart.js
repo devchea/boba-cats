@@ -8,6 +8,7 @@ import {
   Heading,
   Divider,
   Modal,
+  Section,
 } from "@triframe/designer";
 
 const styles = {
@@ -30,36 +31,45 @@ const styles = {
   },
 };
 
-export const Cart = tether(function* ({ Api }) {
-  const { User } = Api;
-  const currentUser = yield User.current();
-
+export const Cart = tether(function* ({ Api, props: { state, currentUser } }) {
   const modal = yield {
     isOpen: false,
   };
-
+  const canBuy = state.total <= currentUser.wallet;
   const buyDrinks = () => {
     modal.isOpen = true;
-    setTimeout(() => {
-      modal.isOpen = false;
-    }, 2000);
+    if (canBuy) {
+      
+    } else {
+      setTimeout(() => {
+        modal.isOpen = false;
+      }, 3000);
+    }
   };
 
-  let featureImage =
+  const featureImage =
     "https://media3.giphy.com/media/MFZyuyHxTnzo0J3fXT/giphy.gif?cid=ecf05e47e181ea14a0a0d15d66447d1539191a146d926b11&rid=giphy.gif";
-
+  const sadImage = "https://media.giphy.com/media/4QFd96yuoBJLLW5bcI/giphy.gif";
   return (
     <Container>
       <Modal visible={modal.isOpen}>
         <Area alignX="center" style={styles.modal}>
-          <img style={styles.featureImage} src={`${featureImage}`} />
-          <Heading>❤ Enjoy your boba! ❤</Heading>
+          {canBuy ? (
+            <Section>
+              <img style={styles.featureImage} src={`${sadImage}`} />
+              <Heading>You need to work more!</Heading>
+            </Section>
+          ) : (
+            <Section>
+              <img style={styles.featureImage} src={`${featureImage}`} />
+              <Heading>❤ Enjoy your boba! ❤</Heading>
+            </Section>
+          )}
         </Area>
       </Modal>
       <Area style={styles.cartContainer}>
         <Title>{currentUser.username}'s Cart</Title>
         <Divider />
-        {/* items in cart here */}
       </Area>
       <Area style={styles.totalContainer}>
         <Divider />
