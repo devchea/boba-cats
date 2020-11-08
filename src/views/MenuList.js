@@ -7,6 +7,7 @@ import {
   Area,
   Divider,
   Container,
+  BubbleButton,
 } from "@triframe/designer";
 
 const styles = {
@@ -15,10 +16,27 @@ const styles = {
   },
 };
 
-export const MenuList = tether(function* ({ Api }) {
-  const { Drink } = Api;
+export const MenuList = tether(function* ({ Api, session }) {
+  const { User, Drink } = Api;
 
+  let currentUser = yield User.current();
   const drinks = yield Drink.list();
+
+  const currentCart = yield {
+    drinks: [],
+    total: 0,
+  };
+
+  const addToCart = (drink) => {
+    currentCart.drinks.push(drink);
+
+    const currentTotal = currentCart.drinks.reduce((acc, val) => {
+      acc += val.price;
+      return acc;
+    }, 0);
+
+    currentCart.total = currentTotal;
+  };
 
   return (
     <Container style={styles.menuContainer}>
@@ -27,12 +45,19 @@ export const MenuList = tether(function* ({ Api }) {
       <Area style={styles.menuContainer}>
         {drinks.map((d, i) => {
           return (
-            <List.Item
-              key={i}
-              title={d.name}
-              description={`$ ${d.price}`}
-              left={() => <Avatar.Image source={d.imageUrl} />}
-            />
+            <Area inline key={i}>
+              <BubbleButton
+                icon="plus"
+                size="xs"
+                color="white"
+                onClick={() => addToCart(d)}
+              />
+              <List.Item
+                title={d.name}
+                description={`$ ${d.price}`}
+                left={() => <Avatar.Image source={d.imageUrl} />}
+              />
+            </Area>
           );
         })}
       </Area>

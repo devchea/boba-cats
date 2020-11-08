@@ -13,26 +13,31 @@ import { Cart } from "./Cart";
 
 export const Dashboard = tether(function* ({ Api, redirect }) {
   const { User } = Api;
-  const [userInfo] = yield User.getUserInfo();
+  const [currentUser] = yield User.getUserInfo();
 
   const logout = () => {
     localStorage.clear();
     redirect("/");
   };
-  return (
-    <Container>
-      <Area alignX="right">
-        <Heading>Wallet Amount: ${userInfo.wallet}</Heading>
-        <Button onPress={logout}>Log out</Button>
-      </Area>
-      <Grid>
-        <Column lg={6}>
-          <MenuList />
-        </Column>
-        <Column lg={4}>
-          <Cart userInfo={userInfo} />
-        </Column>
-      </Grid>
-    </Container>
-  );
+
+  if (currentUser) {
+    return (
+      <Container>
+        <Area alignX="right">
+          <Heading>Wallet Amount: ${currentUser.wallet}</Heading>
+          <Button onPress={logout}>Log out</Button>
+        </Area>
+        <Grid>
+          <Column lg={6}>
+            <MenuList />
+          </Column>
+          <Column lg={4}>
+            <Cart userInfo={currentUser} />
+          </Column>
+        </Grid>
+      </Container>
+    );
+  } else {
+    redirect("/login");
+  }
 });
