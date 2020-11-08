@@ -1,5 +1,6 @@
 import { Resource } from '@triframe/core'
-import { include, Model, string, session, stream, hasMany } from '@triframe/scribe'
+import { include, Model, string, session, stream, hasMany, hiddenUnless } from '@triframe/scribe'
+import { float } from '@triframe/scribe/dist/decorators'
 import { hash, compare } from 'bcrypt'
 
 export class User extends Resource {
@@ -10,6 +11,9 @@ export class User extends Resource {
 
     @string
     passwordDigest = ""
+
+    @float
+    wallet = 20.00
 
     static async register (username, password) {
         let existingUsersWithTheSameName = await User.where({ username: username })
@@ -33,6 +37,7 @@ export class User extends Resource {
             throw Error('Username or Password are incorrect')
         }
         session.loggedInUserId = user.id
+        this.username = username
         return true
     }
 
@@ -48,4 +53,10 @@ export class User extends Resource {
 
     @hasMany
     orders=[]
+
+    @stream
+    static *getUserInfo(){
+        const userInfo = yield User.search({username:this.username})
+        return userInfo
+    }
 }

@@ -31,9 +31,8 @@ const styles = {
 };
 
 export const Cart = tether(function* ({ Api }) {
-  const { Drink } = Api;
-
-  const drinks = yield Drink.list();
+  const { User } = Api;
+  const [userInfo] = yield User.getUserInfo();
 
   const modal = yield {
     isOpen: false,
@@ -58,7 +57,7 @@ export const Cart = tether(function* ({ Api }) {
         </Area>
       </Modal>
       <Area style={styles.cartContainer}>
-        <Title>My Cart</Title>
+        <Title>{userInfo.username}'s Cart</Title>
         <Divider />
         {/* items in cart here */}
       </Area>
