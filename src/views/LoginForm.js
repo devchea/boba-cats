@@ -12,7 +12,10 @@ export const LoginForm = tether(function*({ Api }){
 
     return (
         <Container>
+            <section>
             <Heading>Login</Heading>
+            </section>
+            
             <TextInput 
                 label="Username"
                 value={form.username}
