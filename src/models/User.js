@@ -1,5 +1,5 @@
 import { Resource } from '@triframe/core'
-import { include, Model, string, session, stream } from '@triframe/scribe'
+import { include, Model, string, session, stream, hasMany } from '@triframe/scribe'
 import { hash, compare } from 'bcrypt'
 
 export class User extends Resource {
@@ -45,4 +45,7 @@ export class User extends Resource {
                 : null
         )
     }
+
+    @hasMany
+    drinks=[]
 }
