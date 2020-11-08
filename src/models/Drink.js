@@ -1,5 +1,5 @@
 import { Resource } from "@triframe/core";
-import { include, Model, string, float, belongsTo, readonly } from "@triframe/scribe";
+import { include, Model, string, float, hasMany, readonly } from "@triframe/scribe";
 
 export class Drink extends Resource {
   @include(Model)
@@ -8,13 +8,13 @@ export class Drink extends Resource {
   name = ""
 
   @float
+  @readonly
   price = 0
 
   @string
   category = ""
 
-  @belongsTo
-  @readonly
-  user = null
+  @hasMany
+  drink_orders = []
   
 }

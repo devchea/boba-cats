@@ -47,5 +47,5 @@ export class User extends Resource {
     }
 
     @hasMany
-    drinks=[]
+    orders=[]
 }
