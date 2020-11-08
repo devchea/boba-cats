@@ -2,75 +2,89 @@ import { Drink } from "./Drink";
 
 export async function Seed() {
   const bubbleTeas = [
-    { name: "Vintage Black Milk Tea", price: 4.95, category: "BOBO MILK TEA" },
-    { name: "House Milk Tea", price: 4.95, category: "BOBO MILK TEA" },
-    { name: "Jasmine Green Milk tea", category: "BOBO MILK TEA" },
     {
-      name: "Dongding Oolong Milk Tea",
-      price: 4.95,
-      category: "BOBO MILK TEA",
-    },
-    { name: "Brown Sugar Milk Tea", price: 5.5, category: "BOBO MILK TEA" },
-    { name: "Thai Tea", price: 5.5, category: "BOBO MILK TEA" },
-    { name: "Cheese Jasmine Tippy Tea", price: 4.95, category: "CHEEZO TEA" },
-    { name: "Cheese King Fong Oolong", price: 4.95, category: "CHEEZO TEA" },
-    { name: "Cheese Vintage Tea", price: 4.95, category: "CHEEZO TEA" },
-    { name: "Cheese Peach Oolong", price: 5.5, category: "CHEEZO TEA" },
-    {
-      name: "Supreme Passion Fruit",
-      price: 5.95,
-      category: "SUPREME FRESH FRUIT TEA",
+      name: "Boba Milk Tea",
+      price: 4.5,
+      category: "Milk Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/coffee_boba_coffee_iced.jpg",
     },
     {
-      name: "Supreme Orange",
-      price: 5.95,
-      category: "SUPREME FRESH FRUIT TEA",
+      name: "Lychee Milk Tea",
+      price: 4.5,
+      category: "Milk Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/milk_tea_lychee-1.jpg",
     },
     {
-      name: "Supreme Pineapple",
-      price: 5.95,
-      category: "SUPREME FRESH FRUIT TEA",
-    },
-    { name: "Supreme Kiwi", price: 5.95, category: "SUPREME FRESH FRUIT TEA" },
-    {
-      name: "Supreme Grapefruit",
-      price: 6.25,
-      category: "SUPREME FRESH FRUIT TEA",
+      name: "Jasmine Green Milk Tea",
+      price: 4.5,
+      category: "Milk Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/milk_tea_jasmine-1.jpg",
     },
     {
-      name: "Supreme Very Peach",
-      price: 6.25,
-      category: "SUPREME FRESH FRUIT TEA",
+      name: "Taro Milk Tea",
+      price: 4.5,
+      category: "Milk Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/milk_tea_taro-1.jpg",
     },
     {
-      name: "Supreme Lemon Burst",
-      price: 6.25,
-      category: "SUPREME FRESH FRUIT TEA",
+      name: "Brown Sugar Milk Tea",
+      price: 5,
+      category: "Milk Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/milk_tea_tiger_sugar_milk.jpg",
     },
     {
-      name: "Supreme Cheese Strawberry",
-      price: 5.95,
-      category: "SUPREME CHEESE FRUIT TEA",
+      name: "Thai Milk Tea",
+      price: 4.5,
+      category: "Milk Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/milk_tea_thai_tea-1.jpg",
     },
     {
-      name: "Supreme Cheese Mango",
-      price: 5.95,
-      category: "SUPREME CHEESE FRUIT TEA",
+      name: "Matcha Milk Tea",
+      price: 5.5,
+      category: "Milk Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/milk_tea_matcha-1.jpg",
     },
     {
-      name: "Supreme Cheese Kiwi",
-      price: 6.25,
-      category: "SUPREME CHEESE FRUIT TEA",
+      name: "Strawberry Matcha Milk Tea",
+      price: 5.5,
+      category: "Milk Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/milk_tea_strawberry_matcha-1.jpg",
     },
     {
-      name: "Supreme Cheese Mix Berry",
-      price: 6.25,
-      category: "SUPREME CHEESE FRUIT TEA",
+      name: "Mixed Fruit Iced Tea",
+      price: 5,
+      category: "Fresh Fruit Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/iced_fruit_tea_mixed_fruit_iced_tea-1.jpg",
     },
     {
-      name: "Supreme Cheese Very Peach",
-      price: 6.25,
-      category: "SUPREME CHEESE FRUIT TEA",
+      name: "Grapefruit Iced Tea",
+      price: 5,
+      category: "Fresh Fruit Tea",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/iced_fruit_tea_grapefruit.jpg",
+    },
+    {
+      name: "Cheese Foam Black Tea",
+      price: 5,
+      category: "Cheese Foam",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/cheese_foam_top_cheese_foam_black_tea-1.jpg",
+    },
+    {
+      name: "Cheese Foam Jasmine Matcha",
+      price: 5.5,
+      category: "Cheese Foam",
+      imageUrl:
+        "https://itsbobatime.com/wp-content/uploads/2019/04/cheese_foam_top_cheese_foam_jasmine_matcha-1.jpg",
     },
   ];
 
@@ -83,6 +97,7 @@ export async function Seed() {
           name: tea.name,
           price: tea.price,
           category: tea.category,
+          imageUrl: tea.imageUrl,
         })
       )
     );
