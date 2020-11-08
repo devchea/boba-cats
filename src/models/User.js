@@ -6,18 +6,24 @@ import {
   session,
   stream,
   hasMany,
-  hiddenUnless,
 } from "@triframe/scribe";
 import { float } from "@triframe/scribe/dist/decorators";
 import { hash, compare } from "bcrypt";
+
 export class User extends Resource {
   @include(Model)
   @string
   username = "";
+
   @string
   passwordDigest = "";
+
   @float
   wallet = 20.0;
+
+  @hasMany
+  orders = [];
+
   static async register(username, password) {
     let existingUsersWithTheSameName = await User.where({ username: username });
     if (existingUsersWithTheSameName.length > 0) {
@@ -26,6 +32,7 @@ export class User extends Resource {
     let passwordDigest = await hash(password, 10);
     return User.create({ username: username, passwordDigest: passwordDigest });
   }
+
   @session
   static async login(session, username, password) {
     let [user] = await User.where({ username });
@@ -39,18 +46,12 @@ export class User extends Resource {
     this.username = username;
     return true;
   }
+
   @session
   @stream
   static *current(session) {
     return session.loggedInUserId !== null
       ? yield User.read(session.loggedInUserId)
       : null;
-  }
-  @hasMany
-  orders = [];
-  @stream
-  static *getUserInfo() {
-    const userInfo = yield User.search({ username: this.username });
-    return userInfo;
   }
 }

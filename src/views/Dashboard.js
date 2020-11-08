@@ -13,7 +13,7 @@ import { Cart } from "./Cart";
 
 export const Dashboard = tether(function* ({ Api, redirect }) {
   const { User } = Api;
-  const [currentUser] = yield User.getUserInfo();
+  const currentUser = yield User.current();
 
   const logout = () => {
     localStorage.clear();
@@ -32,7 +32,7 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
             <MenuList />
           </Column>
           <Column lg={4}>
-            <Cart userInfo={currentUser} />
+            <Cart />
           </Column>
         </Grid>
       </Container>
