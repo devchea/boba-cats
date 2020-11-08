@@ -8,7 +8,6 @@ import {
   Button,
   HelperText,
   Area,
-  Section,
 } from "@triframe/designer";
 
 const styles = {
@@ -30,7 +29,7 @@ const styles = {
   },
 };
 
-export const LoginForm = tether(function* ({ Api, redirect}) {
+export const LoginForm = tether(function* ({ Api, redirect }) {
   const { User } = Api;
 
   const form = yield {
@@ -41,11 +40,6 @@ export const LoginForm = tether(function* ({ Api, redirect}) {
 
   let featureImage =
     "https://media0.giphy.com/media/TFUSzloIYghoLfhsp7/giphy.gif?cid=ecf05e477e77d05b637d7922071387045d673be724752c31&rid=giphy.gif";
-
-  // const handleSubmit = async () => {
-  //   console.log('hi');
-  // }
-
 
   return (
     <Area inline alignX="center">
@@ -68,7 +62,7 @@ export const LoginForm = tether(function* ({ Api, redirect}) {
             try {
               const user = await User.login(form.username, form.password);
               if (user) {
-                redirect("/dashboard")
+                redirect("/dashboard");
               }
             } catch (error) {
               form.errorMessage = error.message;
