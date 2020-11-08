@@ -30,7 +30,7 @@ const styles = {
   },
 };
 
-export const LoginForm = tether(function* ({ Api }) {
+export const LoginForm = tether(function* ({ Api, redirect}) {
   const { User } = Api;
 
   const form = yield {
@@ -41,6 +41,11 @@ export const LoginForm = tether(function* ({ Api }) {
 
   let featureImage =
     "https://media0.giphy.com/media/TFUSzloIYghoLfhsp7/giphy.gif?cid=ecf05e477e77d05b637d7922071387045d673be724752c31&rid=giphy.gif";
+
+  // const handleSubmit = async () => {
+  //   console.log('hi');
+  // }
+
 
   return (
     <Area inline alignX="center">
@@ -58,9 +63,13 @@ export const LoginForm = tether(function* ({ Api }) {
           onChange={(value) => (form.password = value)}
         />
         <Button
+          // onPress={handleSubmit}
           onPress={async () => {
             try {
-              await User.login(form.username, form.password);
+              const user = await User.login(form.username, form.password);
+              if (user) {
+                redirect("/dashboard")
+              }
             } catch (error) {
               form.errorMessage = error.message;
             }
