@@ -36,10 +36,15 @@ export const Cart = tether(function* ({ Api, props: { state, currentUser } }) {
     isOpen: false,
   };
   const canBuy = state.total <= currentUser.wallet;
+
+  const purchase = ()=>{
+    currentUser.wallet -= state.total
+  }
+
   const buyDrinks = () => {
     modal.isOpen = true;
     if (canBuy) {
-      
+     purchase();
     } else {
       setTimeout(() => {
         modal.isOpen = false;
