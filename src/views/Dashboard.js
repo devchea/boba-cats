@@ -54,6 +54,11 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
     currentCart.total = currentTotal;
   };
 
+  const emptyCart = () => {
+    currentCart.drinks = [];
+    currentCart.total = 0;
+  };
+
   if (currentUser) {
     return (
       <Container>
@@ -71,6 +76,7 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
               drinks={currentCart.drinks}
               total={currentCart.total}
               deleteFromCart={(drink) => deleteFromCart(drink)}
+              emptyCart={emptyCart}
             />
           </Column>
         </Grid>
