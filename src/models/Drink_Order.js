@@ -1,5 +1,5 @@
 import { Resource } from "@triframe/core";
-import { belongsTo, Model, include } from "@triframe/scribe";
+import { belongsTo, Model, include, integer } from "@triframe/scribe";
 
 export class Drink_Order extends Resource {
   @include(Model)
