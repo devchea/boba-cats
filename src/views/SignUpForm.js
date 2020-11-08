@@ -16,7 +16,7 @@ const styles = {
     alignItems: "center",
     marginTop: "100px",
     border: "solid",
-    borderColor: "#5c20d4",
+    borderColor: "#23ebdd",
     borderRadius: "10px",
     width: "500px",
   },
@@ -42,19 +42,19 @@ export const SignUpForm = tether(function* ({ Api, redirect }) {
   //login message on successful account creation and redirect
   const snackbar = yield {
     visible: false,
-    message: "Success! Please log in!"
-  }
+    message: "Success! Please log in!",
+  };
 
   const accountSuccess = () => {
     snackbar.visible = true;
     setTimeout(() => {
-      redirect("/login")
-    }, 2500)
-  }
+      redirect("/login");
+    }, 2500);
+  };
 
   return (
     <Area inline alignX="center">
-      <Container style={styles.signUpPage}>        
+      <Container style={styles.signUpPage}>
         <Heading>SIGN UP</Heading>
         <img style={styles.featureImage} src={`${featureImage}`} />
         <TextInput
@@ -68,11 +68,12 @@ export const SignUpForm = tether(function* ({ Api, redirect }) {
           onChange={(value) => (form.password = value)}
         />
         <Button
+          color="#23ebdd"
           onPress={async () => {
             try {
-              const user = await User.register(form.username, form.password)
+              const user = await User.register(form.username, form.password);
               if (user) {
-                accountSuccess()
+                accountSuccess();
               }
             } catch (error) {
               form.errorMessage = error.message;

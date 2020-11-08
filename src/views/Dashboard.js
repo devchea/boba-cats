@@ -11,6 +11,18 @@ import {
 import { MenuList } from "./MenuList";
 import { Cart } from "./Cart";
 
+let featureImage =
+  "https://i.pinimg.com/originals/ab/ec/dd/abecdd7e037fa1710ebeebe0fecf9c51.jpg";
+
+const styles = {
+  dashboardContainer: {
+    backgroundImage: `url(${featureImage})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right bottom",
+    backgroundColor: "#f7f7f7",
+  },
+};
+
 export const Dashboard = tether(function* ({ Api, redirect }) {
   const { User } = Api;
   const currentUser = yield User.current();
@@ -61,10 +73,12 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
 
   if (currentUser) {
     return (
-      <Container>
+      <Container style={styles.dashboardContainer}>
         <Area alignX="right">
           <Heading>Wallet Amount: ${currentUser.wallet}</Heading>
-          <Button onPress={logout}>Log out</Button>
+          <Button color="#23ebdd" onPress={logout}>
+            Log out
+          </Button>
         </Area>
         <Grid>
           <Column lg={6}>

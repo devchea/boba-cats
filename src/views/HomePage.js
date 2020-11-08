@@ -13,9 +13,10 @@ const styles = {
     marginTop: "80px",
     width: "1000px",
     border: "solid",
-    borderColor: "#5c20d4",
+    borderColor: "#fee9d4",
     borderRadius: "10px",
     overflowY: "hidden",
+    backgroundColor: "#fee9d4",
   },
   featureImage: {
     width: "600px",
@@ -39,8 +40,12 @@ export const HomePage = tether(function* ({ redirect }) {
           <img style={styles.featureImage} src={`${featureImage}`} />
         </Area>
         <Area inline alignX="center">
-          <Button onPress={() => redirect("/login")}>Login</Button>
-          <Button onPress={() => redirect("/signup")}>Sign Up</Button>
+          <Button color="#23ebdd" onPress={() => redirect("/login")}>
+            Login
+          </Button>
+          <Button color="#23ebdd" onPress={() => redirect("/signup")}>
+            Sign Up
+          </Button>
         </Area>
       </Container>
     </Area>

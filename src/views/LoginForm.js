@@ -15,7 +15,7 @@ const styles = {
     alignItems: "center",
     marginTop: "100px",
     border: "solid",
-    borderColor: "#5c20d4",
+    borderColor: "#23ebdd",
     borderRadius: "10px",
     width: "500px",
   },
@@ -57,7 +57,7 @@ export const LoginForm = tether(function* ({ Api, redirect }) {
           onChange={(value) => (form.password = value)}
         />
         <Button
-          // onPress={handleSubmit}
+          color="#23ebdd"
           onPress={async () => {
             try {
               const user = await User.login(form.username, form.password);
