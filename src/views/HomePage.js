@@ -10,8 +10,8 @@ import {
 
 const styles = {
   homePage: {
-    backgroundColor: "#fee9d4",
     marginTop: "80px",
+    height: "100%",
   },
   featureImage: {
     width: "600px",
@@ -24,12 +24,10 @@ export const HomePage = tether(function* ({ Api, redirect }) {
   let featureImage =
     "https://i.pinimg.com/originals/7a/4c/fd/7a4cfd654c3b99b94e93c7524b57ff7f.jpg";
 
-  document.body.style = "background: #fee9d4";
-
   return (
     <Container style={styles.homePage}>
       <Area inline alignX="center">
-        <Title>❤ boba cats ❤</Title>
+        <Title>❤ BOBA CATS ❤</Title>
       </Area>
       <Divider />
       <Area inline alignX="center">
