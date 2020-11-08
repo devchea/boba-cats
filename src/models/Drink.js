@@ -4,7 +4,7 @@ import {
   Model,
   string,
   float,
-  belongsTo,
+  hasMany,
   readonly,
 } from "@triframe/scribe";
 
@@ -14,6 +14,7 @@ export class Drink extends Resource {
   name = "";
 
   @float
+  @readonly
   price = 0;
 
   @string
@@ -22,7 +23,6 @@ export class Drink extends Resource {
   @string
   imageUrl = "";
 
-  @belongsTo
-  @readonly
-  user = null;
+  @hasMany
+  drink_orders = [];
 }
