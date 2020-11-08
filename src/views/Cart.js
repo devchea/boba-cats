@@ -35,7 +35,7 @@ const styles = {
 };
 
 export const Cart = tether(function* ({
-  props: { drinks, total, deleteFromCart, currentUser },
+  props: { drinks, total, deleteFromCart, currentUser, emptyCart },
 }) {
   const modal = yield {
     isOpen: false,
@@ -48,7 +48,10 @@ export const Cart = tether(function* ({
 
   const buyDrinks = () => {
     modal.isOpen = true;
-    if (canBuy) purchase();
+    if (canBuy) {
+      purchase();
+      emptyCart();
+    }
     setTimeout(() => {
       modal.isOpen = false;
     }, 3000);
@@ -56,20 +59,22 @@ export const Cart = tether(function* ({
 
   const featureImage =
     "https://media3.giphy.com/media/MFZyuyHxTnzo0J3fXT/giphy.gif?cid=ecf05e47e181ea14a0a0d15d66447d1539191a146d926b11&rid=giphy.gif";
+
   const sadImage = "https://media.giphy.com/media/4QFd96yuoBJLLW5bcI/giphy.gif";
+
   return (
     <Container>
       <Modal visible={modal.isOpen}>
         <Area alignX="center" style={styles.modal}>
-          {!canBuy ? (
-            <Section>
-              <img style={styles.featureImage} src={`${sadImage}`} />
-              <Heading>You need to work more!</Heading>
-            </Section>
-          ) : (
+          {canBuy ? (
             <Section>
               <img style={styles.featureImage} src={`${featureImage}`} />
               <Heading>❤ Enjoy your boba! ❤</Heading>
+            </Section>
+          ) : (
+            <Section>
+              <img style={styles.featureImage} src={`${sadImage}`} />
+              <Heading>You need to work more!</Heading>
             </Section>
           )}
         </Area>
