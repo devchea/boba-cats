@@ -1,12 +1,14 @@
 import { Resource } from "@triframe/core";
-import {belongsTo, Model, include } from "@triframe/scribe";
+import { belongsTo, Model, include, integer } from "@triframe/scribe";
 
 export class Drink_Order extends Resource {
-    @include(Model)
+  @include(Model)
+  @integer
+  quantity = 0;
 
-    @belongsTo
-    drink = null
+  @belongsTo
+  drink = null;
 
-    @belongsTo
-    order = null
-} 
+  @belongsTo
+  order = null;
+}
