@@ -16,27 +16,11 @@ const styles = {
   },
 };
 
-export const MenuList = tether(function* ({ Api, session }) {
+export const MenuList = tether(function* ({ Api, props: { addToCart } }) {
   const { User, Drink } = Api;
 
   let currentUser = yield User.current();
   const drinks = yield Drink.list();
-
-  const currentCart = yield {
-    drinks: [],
-    total: 0,
-  };
-
-  const addToCart = (drink) => {
-    currentCart.drinks.push(drink);
-
-    const currentTotal = currentCart.drinks.reduce((acc, val) => {
-      acc += val.price;
-      return acc;
-    }, 0);
-
-    currentCart.total = currentTotal;
-  };
 
   return (
     <Container style={styles.menuContainer}>

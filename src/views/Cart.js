@@ -8,6 +8,9 @@ import {
   Heading,
   Divider,
   Modal,
+  List,
+  BubbleButton,
+  Avatar,
 } from "@triframe/designer";
 
 const styles = {
@@ -30,7 +33,10 @@ const styles = {
   },
 };
 
-export const Cart = tether(function* ({ Api }) {
+export const Cart = tether(function* ({
+  Api,
+  props: { drinks, total, deleteFromCart },
+}) {
   const { User } = Api;
   const currentUser = yield User.current();
 
@@ -59,11 +65,28 @@ export const Cart = tether(function* ({ Api }) {
       <Area style={styles.cartContainer}>
         <Title>{currentUser.username}'s Cart</Title>
         <Divider />
-        {/* items in cart here */}
+        <Area style={styles.menuContainer}></Area>
+        {drinks.map((d, i) => {
+          return (
+            <Area inline key={i}>
+              <BubbleButton
+                icon="minus"
+                size="xs"
+                color="white"
+                onClick={() => deleteFromCart(d)}
+              />
+              <List.Item
+                title={d.name}
+                description={`$ ${d.price}`}
+                left={() => <Avatar.Image source={d.imageUrl} />}
+              />
+            </Area>
+          );
+        })}
       </Area>
       <Area style={styles.totalContainer}>
         <Divider />
-        <Heading style={styles.totalText}>Total: $</Heading>
+        <Heading style={styles.totalText}>Total: ${total}</Heading>
         <Button onClick={() => buyDrinks()}>Get Yo Boba!</Button>
       </Area>
     </Container>
