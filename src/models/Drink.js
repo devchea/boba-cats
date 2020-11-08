@@ -3,14 +3,18 @@ import { include, Model, string, float, belongsTo, readonly } from "@triframe/sc
 
 export class Drink extends Resource {
   @include(Model)
+  
   @string
-  name = "";
+  name = ""
 
   @float
-  price = 0;
+  price = 0
+
+  @string
+  category = ""
 
   @belongsTo
   @readonly
-  user = null;
+  user = null
   
 }
