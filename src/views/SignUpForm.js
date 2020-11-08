@@ -9,6 +9,7 @@ import {
   HelperText,
   Area,
 } from "@triframe/designer";
+import { Snackbar } from "@triframe/designer/dist/paper";
 
 const styles = {
   signUpPage: {
@@ -38,9 +39,22 @@ export const SignUpForm = tether(function* ({ Api, redirect }) {
   let featureImage =
     "https://media0.giphy.com/media/g0sM3ysY4s1atzftDY/source.gif";
 
+  //login message on successful account creation and redirect
+  const snackbar = yield {
+    visible: false,
+    message: "Success! Please log in!"
+  }
+
+  const accountSuccess = () => {
+    snackbar.visible = true;
+    setTimeout(() => {
+      redirect("/login")
+    }, 2500)
+  }
+
   return (
     <Area inline alignX="center">
-      <Container style={styles.signUpPage}>
+      <Container style={styles.signUpPage}>        
         <Heading>SIGN UP</Heading>
         <img style={styles.featureImage} src={`${featureImage}`} />
         <TextInput
@@ -56,9 +70,9 @@ export const SignUpForm = tether(function* ({ Api, redirect }) {
         <Button
           onPress={async () => {
             try {
-              const user = User.register(form.username, form.password)
+              const user = await User.register(form.username, form.password)
               if (user) {
-                redirect("/dashboard")
+                accountSuccess()
               }
             } catch (error) {
               form.errorMessage = error.message;
@@ -70,6 +84,7 @@ export const SignUpForm = tether(function* ({ Api, redirect }) {
         <HelperText type="error" visible={form.errorMessage !== null}>
           {form.errorMessage}
         </HelperText>
+        <Snackbar visible={snackbar.visible}>{snackbar.message}</Snackbar>
       </Container>
     </Area>
   );
