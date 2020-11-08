@@ -12,5 +12,5 @@ export class Drink extends Resource {
   @belongsTo
   @readonly
   user = null;
-
+  
 }
