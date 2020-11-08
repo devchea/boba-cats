@@ -12,19 +12,17 @@ import { MenuList } from "./MenuList";
 import { Cart } from "./Cart";
 
 export const Dashboard = tether(function* ({ Api, redirect }) {
-  const { Drink } = Api;
-
-  const drinks = yield Drink.list();
+  const { User } = Api;
+  const [userInfo] = yield User.getUserInfo();
 
   const logout = () => {
     localStorage.clear();
     redirect("/");
   };
-
   return (
     <Container>
       <Area alignX="right">
-        <Heading>Wallet Amount: $</Heading>
+        <Heading>Wallet Amount: ${userInfo.wallet}</Heading>
         <Button onPress={logout}>Log out</Button>
       </Area>
       <Grid>
@@ -32,7 +30,7 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
           <MenuList />
         </Column>
         <Column lg={4}>
-          <Cart />
+          <Cart userInfo={userInfo} />
         </Column>
       </Grid>
     </Container>
