@@ -8,6 +8,7 @@ import {
   Heading,
   Divider,
   Modal,
+  Section,
   List,
   BubbleButton,
   Avatar,
@@ -34,32 +35,43 @@ const styles = {
 };
 
 export const Cart = tether(function* ({
-  Api,
-  props: { drinks, total, deleteFromCart },
+  props: { drinks, total, deleteFromCart, currentUser },
 }) {
-  const { User } = Api;
-  const currentUser = yield User.current();
-
   const modal = yield {
     isOpen: false,
+  };
+  const canBuy = total <= currentUser.wallet;
+
+  const purchase = () => {
+    currentUser.wallet -= total;
   };
 
   const buyDrinks = () => {
     modal.isOpen = true;
+    if (canBuy) purchase();
     setTimeout(() => {
       modal.isOpen = false;
-    }, 2000);
+    }, 3000);
   };
 
-  let featureImage =
+  const featureImage =
     "https://media3.giphy.com/media/MFZyuyHxTnzo0J3fXT/giphy.gif?cid=ecf05e47e181ea14a0a0d15d66447d1539191a146d926b11&rid=giphy.gif";
-
+  const sadImage = "https://media.giphy.com/media/4QFd96yuoBJLLW5bcI/giphy.gif";
   return (
     <Container>
       <Modal visible={modal.isOpen}>
         <Area alignX="center" style={styles.modal}>
-          <img style={styles.featureImage} src={`${featureImage}`} />
-          <Heading>❤ Enjoy your boba! ❤</Heading>
+          {!canBuy ? (
+            <Section>
+              <img style={styles.featureImage} src={`${sadImage}`} />
+              <Heading>You need to work more!</Heading>
+            </Section>
+          ) : (
+            <Section>
+              <img style={styles.featureImage} src={`${featureImage}`} />
+              <Heading>❤ Enjoy your boba! ❤</Heading>
+            </Section>
+          )}
         </Area>
       </Modal>
       <Area style={styles.cartContainer}>

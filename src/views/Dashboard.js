@@ -14,7 +14,6 @@ import { Cart } from "./Cart";
 export const Dashboard = tether(function* ({ Api, redirect }) {
   const { User } = Api;
   const currentUser = yield User.current();
-
   const logout = () => {
     localStorage.clear();
     redirect("/");
@@ -68,6 +67,7 @@ export const Dashboard = tether(function* ({ Api, redirect }) {
           </Column>
           <Column lg={4}>
             <Cart
+              currentUser={currentUser}
               drinks={currentCart.drinks}
               total={currentCart.total}
               deleteFromCart={(drink) => deleteFromCart(drink)}
