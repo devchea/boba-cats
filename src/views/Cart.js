@@ -32,11 +32,16 @@ const styles = {
     width: "200px",
     height: "200px",
   },
+  button: {
+    color: "#23ebdd",
+  },
+  title: {
+    textTransform: "capitalize",
+  },
 };
 
-export const Cart = tether(function* ({
-  Api,
-  props: { drinks, total, deleteFromCart, currentUser },
+export const Cart = tether(function* ({Api,
+  props: { drinks, total, deleteFromCart, currentUser, emptyCart },
 }) {
   const { Order, DrinkOrder } = Api;
   const modal = yield {
@@ -70,34 +75,45 @@ export const Cart = tether(function* ({
 
   const buyDrinks = () => {
     modal.isOpen = true;
-    if (canBuy) purchase();
+    if (canBuy && drinks.length > 0) {
+      purchase();
+      emptyCart();
+    }
     setTimeout(() => {
       modal.isOpen = false;
     }, 3000);
   };
 
+  const capitalize = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  const name = capitalize(currentUser.username);
+
   const featureImage =
     "https://media3.giphy.com/media/MFZyuyHxTnzo0J3fXT/giphy.gif?cid=ecf05e47e181ea14a0a0d15d66447d1539191a146d926b11&rid=giphy.gif";
+
   const sadImage = "https://media.giphy.com/media/4QFd96yuoBJLLW5bcI/giphy.gif";
+
   return (
     <Container>
       <Modal visible={modal.isOpen}>
         <Area alignX="center" style={styles.modal}>
-          {canBuy === false ? (
-            <Section>
-              <img style={styles.featureImage} src={`${sadImage}`} />
-              <Heading>You need to work more!</Heading>
-            </Section>
-          ) : (
+          {canBuy ? (
             <Section>
               <img style={styles.featureImage} src={`${featureImage}`} />
               <Heading>❤ Enjoy your boba! ❤</Heading>
+            </Section>
+          ) : (
+            <Section>
+              <img style={styles.featureImage} src={`${sadImage}`} />
+              <Heading>You need to work more!</Heading>
             </Section>
           )}
         </Area>
       </Modal>
       <Area style={styles.cartContainer}>
-        <Title>{currentUser.username}'s Cart</Title>
+        <Title>{name}'s Cart</Title>
         <Divider />
         <Area style={styles.menuContainer}></Area>
         {drinks.map((d, i) => {
@@ -121,7 +137,9 @@ export const Cart = tether(function* ({
       <Area style={styles.totalContainer}>
         <Divider />
         <Heading style={styles.totalText}>Total: ${total}</Heading>
-        <Button onClick={() => buyDrinks()}>Get Yo Boba!</Button>
+        <Button onClick={() => buyDrinks()} color="#23ebdd">
+          Get Yo Boba!
+        </Button>
       </Area>
     </Container>
   );
