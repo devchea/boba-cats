@@ -40,15 +40,36 @@ const styles = {
   },
 };
 
-export const Cart = tether(function* ({
+export const Cart = tether(function* ({Api,
   props: { drinks, total, deleteFromCart, currentUser, emptyCart },
 }) {
+  const { Order, DrinkOrder } = Api;
   const modal = yield {
     isOpen: false,
   };
   const canBuy = total <= currentUser.wallet;
 
   const purchase = () => {
+    async function association() {
+      try {
+        let newOrder = await Order.create({
+          total: total,
+          user: currentUser.id,
+        });
+        
+        for (let drink of drinks) {
+          await DrinkOrder.create({
+            orderId: newOrder.id,
+            drinkId: drink.id,
+          });
+        }
+
+        console.log({ newOrder });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    association();
     currentUser.wallet -= total;
   };
 

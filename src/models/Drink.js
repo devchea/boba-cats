@@ -24,5 +24,8 @@ export class Drink extends Resource {
   imageUrl = "";
 
   @hasMany
-  drink_orders = [];
+  drinkOrders=[]
+
+  @hasMany({ through: (drink) => drink.drinkOrders.order })
+  orders = [];
 }
