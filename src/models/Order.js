@@ -22,5 +22,8 @@ export class Order extends Resource {
   user = null;
 
   @hasMany
-  drink_orders = [];
+  drinkOrders=[]
+
+  @hasMany({ through: (order) => order.drinkOrders.drink })
+  drinks = [];
 }

@@ -20,7 +20,7 @@ export class User extends Resource {
 
   @float
   wallet = 20.0;
-
+  
   @hasMany
   orders = [];
 
@@ -53,5 +53,13 @@ export class User extends Resource {
     return session.loggedInUserId !== null
       ? yield User.read(session.loggedInUserId)
       : null;
+  }
+
+  @stream
+  static *getUserOrders(userId){
+  const user = yield User.read(userId)
+  const orders = yield user.orders;
+  console.log({orders})
+  return orders
   }
 }
